@@ -1,0 +1,52 @@
+package aula5;
+
+import java.util.LinkedList;
+
+class Fila<T> {
+	private LinkedList<T> elementos;
+
+	public Fila() {
+		this.elementos = new LinkedList<>();
+	}
+
+	public void inserir(T item) {
+		elementos.addLast(item);
+	}
+
+	public T remover() {
+		if (estaVazia()) {
+			System.out.println("A fila está vazia");
+		}
+		return elementos.removeFirst();
+	}
+
+	public int tamanho() {
+		return elementos.size();
+	}
+
+	public boolean estaVazia() {
+		return elementos.isEmpty();
+	}
+
+	public void imprimir() {
+		for (T item : elementos) {
+			System.out.println(item);
+		}
+	}
+
+	public static void main(String[] args) {
+	
+		Fila<Integer> fila = new Fila<>();
+		fila.inserir(5);
+		fila.inserir(2);
+		fila.inserir(7);
+
+		System.out.println("Fila:");
+		fila.imprimir();
+
+		System.out.println("Removido: " + fila.remover());
+		System.out.println("A fila está vazia? " + fila.estaVazia());
+		System.out.println("Tamanho da fila: " + fila.tamanho());
+		
+	}
+}
