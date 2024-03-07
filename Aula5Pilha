@@ -1,0 +1,72 @@
+package aula5;
+
+class Pilha<T> {
+	private No<T> topo;
+	private int tamanho;
+
+	public Pilha() {
+		topo = null;
+		tamanho = 0;
+	}
+
+	public void inserir(T dado) {
+		No<T> novoNo = new No<>(dado);
+		novoNo.proximo = topo;
+		topo = novoNo;
+		tamanho++;
+	}
+
+	public T remover() {
+		if (estaVazia()) {
+			System.out.println("Pilha esta vazia!");
+		}
+		T dadoRemovido = topo.dado;
+		topo = topo.proximo;
+		tamanho--;
+		return dadoRemovido;
+	}
+
+	public int tamanho() {
+		return tamanho;
+	}
+
+	public boolean estaVazia() {
+		return topo == null;
+	}
+
+	public void imprimir() {
+		System.out.println("Dados da Pilha:");
+		No<T> atual = topo;
+		while (atual != null) {
+			System.out.println(atual.dado);
+			atual = atual.proximo;
+		}
+	}
+
+	private static class No<T> {
+		T dado;
+		No<T> proximo;
+
+		public No(T dado) {
+			this.dado = dado;
+			this.proximo = null;
+		}
+	}
+
+	public static void main(String[] args) {
+
+		Pilha<Integer> pilha = new Pilha<>();
+		pilha.inserir(4);
+		pilha.inserir(5);
+		pilha.inserir(7);
+
+		pilha.imprimir();
+
+		System.out.println("Removido: " + pilha.remover());
+
+		System.out.println("A Pilha está vazia? " + pilha.estaVazia());
+
+		System.out.println("Tamanho da pilha: " + pilha.tamanho());
+
+	}
+}
