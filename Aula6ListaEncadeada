@@ -1,0 +1,135 @@
+package Aula6;
+
+class No {
+    int valor;
+    No proximo;
+
+    public No(int valor) {
+        this.valor = valor;
+        this.proximo = null;
+    }
+}
+
+public class ListaEncadeada {
+    private No inicio;
+    private int tamanho;
+
+    public ListaEncadeada() {
+        this.inicio = null;
+        this.tamanho = 0;
+    }
+
+    public void inserirNoInicio(int valor) {
+        No novoNo = new No(valor);
+        novoNo.proximo = inicio;
+        inicio = novoNo;
+        tamanho++;
+    }
+
+    public void inserirNoFim(int valor) {
+        if (inicio == null) {
+            inserirNoInicio(valor);
+            return;
+        }
+        No novoNo = new No(valor);
+        No atual = inicio;
+        while (atual.proximo != null) {
+            atual = atual.proximo;
+        }
+        atual.proximo = novoNo;
+        tamanho++;
+    }
+
+    public void inserirNoMeio(int valor) {
+        if (inicio == null || valor < inicio.valor) {
+            inserirNoInicio(valor);
+            return;
+        }
+        No novoNo = new No(valor);
+        No anterior = null;
+        No atual = inicio;
+        while (atual != null && valor > atual.valor) {
+            anterior = atual;
+            atual = atual.proximo;
+        }
+        novoNo.proximo = atual;
+        if (anterior != null) {
+            anterior.proximo = novoNo;
+        } else {
+            inicio = novoNo;
+        }
+        tamanho++;
+    }
+
+    public int removerDoInicio() {
+        if (inicio == null) {
+           System.out.println("A lista está vazia");
+        }
+        int valorRemovido = inicio.valor;
+        inicio = inicio.proximo;
+        tamanho--;
+        return valorRemovido;
+    }
+
+    public int removerDoFim() {
+        if (inicio == null) {
+            System.out.println("A lista está vazia");
+        }
+        if (inicio.proximo == null) {
+            return removerDoInicio();
+        }
+        No anterior = null;
+        No atual = inicio;
+        while (atual.proximo != null) {
+            anterior = atual;
+            atual = atual.proximo;
+        }
+        int valorRemovido = atual.valor;
+        anterior.proximo = null;
+        tamanho--;
+        return valorRemovido;
+    }
+
+    public int removerDoMeio() {
+        return removerDoInicio();
+    }
+
+    public int getTamanho() {
+        return tamanho;
+    }
+
+    public boolean estaVazia() {
+        return inicio == null;
+    }
+
+    public void imprimir() {
+        No atual = inicio;
+        while (atual != null) {
+            System.out.print(atual.valor + " ");
+            atual = atual.proximo;
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        ListaEncadeada lista = new ListaEncadeada();
+        lista.inserirNoInicio(2);
+        lista.inserirNoInicio(12);
+        lista.inserirNoFim(15);
+        lista.inserirNoMeio(20);
+
+        System.out.println("Lista:");
+        lista.imprimir();
+
+        System.out.println("Tamanho da lista: " + lista.getTamanho());
+        System.out.println("Lista Vazia? " + lista.estaVazia());
+
+        lista.removerDoInicio();
+        lista.removerDoFim();
+        lista.removerDoMeio();
+
+        System.out.println("Lista deois das remoções:");
+        lista.imprimir();
+    }
+}
+
