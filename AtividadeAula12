@@ -1,0 +1,91 @@
+class No {
+    int valor;
+    No esquerda, direita;
+
+    public No(int item) {
+        valor = item;
+        esquerda = direita = null;
+    }
+}
+
+public class ArvoreBinariaBusca {
+    No raiz;
+
+    ArvoreBinariaBusca() {
+        raiz = null;
+    }
+
+    void inserir(int valor) {
+        raiz = inserirRecursivo(raiz, valor);
+    }
+
+    No inserirRecursivo(No raiz, int valor) {
+        if (raiz == null) {
+            raiz = new No(valor);
+            return raiz;
+        }
+
+        if (valor < raiz.valor)
+            raiz.esquerda = inserirRecursivo(raiz.esquerda, valor);
+        else if (valor > raiz.valor)
+            raiz.direita = inserirRecursivo(raiz.direita, valor);
+
+        return raiz;
+    }
+
+    void buscaEmOrdem() {
+        buscaEmOrdemRecursivo(raiz);
+    }
+
+    void buscaEmOrdemRecursivo(No raiz) {
+        if (raiz != null) {
+            buscaEmOrdemRecursivo(raiz.esquerda);
+            System.out.print(raiz.valor + " ");
+            buscaEmOrdemRecursivo(raiz.direita);
+        }
+    }
+
+    void buscaPreOrdem() {
+        buscaPreOrdemRecursivo(raiz);
+    }
+
+    void buscaPreOrdemRecursivo(No raiz) {
+        if (raiz != null) {
+            System.out.print(raiz.valor + " ");
+            buscaPreOrdemRecursivo(raiz.esquerda);
+            buscaPreOrdemRecursivo(raiz.direita);
+        }
+    }
+
+    void buscaPosOrdem() {
+        buscaPosOrdemRecursivo(raiz);
+    }
+
+    void buscaPosOrdemRecursivo(No raiz) {
+        if (raiz != null) {
+            buscaPosOrdemRecursivo(raiz.esquerda);
+            buscaPosOrdemRecursivo(raiz.direita);
+            System.out.print(raiz.valor + " ");
+        }
+    }
+
+    public static void main(String[] args) {
+        ArvoreBinariaBusca arvore = new ArvoreBinariaBusca();
+        arvore.inserir(2);
+        arvore.inserir(5);
+        arvore.inserir(15);
+        arvore.inserir(20);
+        arvore.inserir(30);
+        arvore.inserir(60);
+        arvore.inserir(80);
+
+        System.out.println("Busca em Ordem:");
+        arvore.buscaEmOrdem();
+
+        System.out.println("\nBusca Pré-Ordem:");
+        arvore.buscaPreOrdem();
+
+        System.out.println("\nBusca Pós-Ordem:");
+        arvore.buscaPosOrdem();
+    }
+}
