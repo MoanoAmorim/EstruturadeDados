@@ -1,0 +1,108 @@
+class No {
+    int chave;
+    No esquerdo, direito;
+
+    public No(int item) {
+        chave = item;
+        esquerdo = direito = null;
+    }
+}
+
+class ArvoreBinariaDeBusca {
+    No raiz;
+
+    ArvoreBinariaDeBusca() {
+        raiz = null;
+    }
+
+    
+    No buscar(int chave) {
+        return buscarRecursivo(raiz, chave);
+    }
+
+    No buscarRecursivo(No raiz, int chave) {
+        
+        if (raiz == null || raiz.chave == chave)
+            return raiz;
+
+        
+        if (raiz.chave < chave)
+            return buscarRecursivo(raiz.direito, chave);
+
+        
+        return buscarRecursivo(raiz.esquerdo, chave);
+    }
+
+   
+    void deletar(int chave) {
+        raiz = deletarRecursivo(raiz, chave);
+    }
+
+    No deletarRecursivo(No raiz, int chave) {
+        
+        if (raiz == null) return raiz;
+
+        
+        if (chave < raiz.chave)
+            raiz.esquerdo = deletarRecursivo(raiz.esquerdo, chave);
+        else if (chave > raiz.chave)
+            raiz.direito = deletarRecursivo(raiz.direito, chave);
+        else {
+            
+            if (raiz.esquerdo == null)
+                return raiz.direito;
+            if (raiz.direito == null)
+                return raiz.esquerdo;
+
+            
+            raiz.chave = valorMinimo(raiz.direito);
+
+            
+            raiz.direito = deletarRecursivo(raiz.direito, raiz.chave);
+        }
+
+        return raiz;
+    }
+
+    int valorMinimo(No raiz) {
+        int valorMinimo = raiz.chave;
+        while (raiz.esquerdo != null) {
+            valorMinimo = raiz.esquerdo.chave;
+            raiz = raiz.esquerdo;
+        }
+        return valorMinimo;
+    }
+
+    
+    void inserir(int chave) {
+        raiz = inserirRecursivo(raiz, chave);
+    }
+
+    No inserirRecursivo(No raiz, int chave) {
+        if (raiz == null) {
+            raiz = new No(chave);
+            return raiz;
+        }
+
+        if (chave < raiz.chave)
+            raiz.esquerdo = inserirRecursivo(raiz.esquerdo, chave);
+        else if (chave > raiz.chave)
+            raiz.direito = inserirRecursivo(raiz.direito, chave);
+
+        return raiz;
+    }
+
+   
+    void emOrdem() {
+        percorrerEmOrdem(raiz);
+        System.out.println();
+    }
+
+    void percorrerEmOrdem(No raiz) {
+        if (raiz != null) {
+            percorrerEmOrdem(raiz.esquerdo);
+            System.out.print(raiz.chave + " ");
+            percorrerEmOrdem(raiz.direito);
+        }
+    }
+}
