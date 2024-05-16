@@ -1,0 +1,48 @@
+class No {
+    int chave;
+    No esquerdo, direito;
+
+    public No(int item) {
+        chave = item;
+        esquerdo = direito = null;
+    }
+}
+
+class ArvoreBinaria {
+    No raiz;
+
+    ArvoreBinaria() {
+        raiz = null;
+    }
+
+    
+    void inserir(int chave) {
+        raiz = inserirRecursivo(raiz, chave);
+    }
+
+    No inserirRecursivo(No raiz, int chave) {
+        if (raiz == null) {
+            raiz = new No(chave);
+            return raiz;
+        }
+
+        if (chave < raiz.chave)
+            raiz.esquerdo = inserirRecursivo(raiz.esquerdo, chave);
+        else if (chave > raiz.chave)
+            raiz.direito = inserirRecursivo(raiz.direito, chave);
+
+        return raiz;
+    }
+
+    
+    int altura() {
+        return calcularAltura(raiz);
+    }
+
+    int calcularAltura(No raiz) {
+        if (raiz == null) return 0;
+        int alturaEsquerda = calcularAltura(raiz.esquerdo);
+        int alturaDireita = calcularAltura(raiz.direito);
+        return Math.max(alturaEsquerda, alturaDireita) + 1;
+    }
+}
